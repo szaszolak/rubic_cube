@@ -1,6 +1,9 @@
 import random
 import numpy as np
+from Wall import Wall
 
+# horizontal neighbors are ordered from left to right
+# vertical neighbors are ordered from left to right
 class Cube:
     def __init__(self):
         self.colors = []
@@ -16,8 +19,8 @@ class Cube:
             row1 = [self.colors.pop(0) for col in range(3)]
             row2 = [self.colors.pop(0), self.conts_cols.pop(0), self.colors.pop(0)]
             row3 = [self.colors.pop(0) for col in range(3)]
-            wall = np.asmatrix([row1, row2, row3])
-            self.walls.append(wall)
+            wall_mx = np.asmatrix([row1, row2, row3])
+            self.walls.append(Wall(wall_mx))
 
     def get_color(self, id):
         if id == 0:
@@ -33,6 +36,12 @@ class Cube:
         else:
             color = 'yellow'
         return color
-        
 
-
+    def build_adjacency_dictionary(self):
+        self.adjacency_dictionary = {}
+        # wall 1
+        self.adjacency_dictionary[self.walls[0]] = \
+        {
+          'h': [self.walls[4], self.walls[5], self.walls[1]],
+          'v': [self.walls[2], self.walls[5], self.walls[3]]
+        }
