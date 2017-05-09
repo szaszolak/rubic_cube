@@ -47,21 +47,36 @@ class Wall:
                + np.count_nonzero(row == self.goal))
 
     def swap_upper_row(self, row):
-        previous = self.state[0, :]
+        previous = self.get_upper_row()
         self.state[0, :] = row
         return previous
 
     def swap_lower_row(self, row):
-        previous = self.state[2, :]
+        previous = self.get_lower_row()
         self.state[2, :] = row
         return previous
 
     def swap_left_column(self, column):
-        previous = self.state[:, 0]
+        previous = self.get_left_column()
         self.state[:, 0] = np.transpose(column)
         return previous
 
     def swap_right_column(self, column):
-        previous = self.state[:, 2]
+        previous = self.get_right_column()
         self.state[:, 2] = np.transpose(column)
         return previous
+
+    def get_upper_row(self):
+        return self.state[0, :]
+
+    def get_lower_row(self):
+        return self.state[2, :]
+
+    def get_left_column(self):
+        return self.state[:, 0]
+
+    def get_right_column(self):
+        return self.state[:, 2]
+
+    def missing_blocks(self):
+        return 9 - np.count_nonzero(self.state == self.goal)
