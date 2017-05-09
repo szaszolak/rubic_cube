@@ -4,8 +4,9 @@ import numpy as np
 class Cube:
     def __init__(self):
         self.colors = []
+        self.conts_cols = [0, 1, 2, 3, 4, 5]
         for color_index in range(6):
-            for wall in range(9):
+            for wall in range(8):
                 self.colors.append(color_index)
         random.shuffle(self.colors)
 
@@ -13,7 +14,7 @@ class Cube:
         self.walls = []
         for wall in range(6):
             row1 = [self.colors.pop(0) for col in range(3)]
-            row2 = [self.colors.pop(0) for col in range(3)]
+            row2 = [self.colors.pop(0), self.conts_cols.pop(0), self.colors.pop(0)]
             row3 = [self.colors.pop(0) for col in range(3)]
             wall = np.asmatrix([row1, row2, row3])
             self.walls.append(wall)
