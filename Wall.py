@@ -67,16 +67,16 @@ class Wall:
         return previous
 
     def get_upper_row(self):
-        return self.state[0, :]
+        return self.state[0, :].copy()
 
     def get_lower_row(self):
-        return self.state[2, :]
+        return self.state[2, :].copy()
 
     def get_left_column(self):
-        return self.state[:, 0]
+        return self.state[:, 0].copy()
 
     def get_right_column(self):
-        return self.state[:, 2]
+        return self.state[:, 2].copy()
 
     def missing_blocks(self):
         return 9 - np.count_nonzero(self.state == self.goal)

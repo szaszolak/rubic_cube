@@ -2,16 +2,22 @@ import random
 import numpy as np
 from Wall import Wall
 
+
 # horizontal neighbors are ordered from left to right
 # vertical neighbors are ordered from left to right
 class Cube:
     def __init__(self):
         self.colors = []
         self.conts_cols = [0, 1, 2, 3, 4, 5]
+        self.adjacency_dictionary = {}
+
         for color_index in range(6):
             for wall in range(8):
                 self.colors.append(color_index)
         random.shuffle(self.colors)
+        self.generate()
+        self.build_adjacency_dictionary()
+
 
     def generate(self):
         self.walls = []
@@ -38,10 +44,53 @@ class Cube:
         return color
 
     def build_adjacency_dictionary(self):
-        self.adjacency_dictionary = {}
         # wall 1
         self.adjacency_dictionary[self.walls[0]] = \
-        {
-          'h': [self.walls[4], self.walls[5], self.walls[1]],
-          'v': [self.walls[2], self.walls[5], self.walls[3]]
-        }
+            {
+                'h': [self.walls[4], self.walls[5], self.walls[1]],
+                'v': [self.walls[2], self.walls[5], self.walls[3]]
+            }
+
+        # wall 2
+        self.adjacency_dictionary[self.walls[1]] = \
+            {
+                'h': [self.walls[0], self.walls[4], self.walls[5]],
+                'v': [self.walls[2], self.walls[4], self.walls[3]]
+            }
+
+        # wall 3
+        self.adjacency_dictionary[self.walls[2]] = \
+            {
+                'h': [self.walls[0], self.walls[3], self.walls[5]],
+                'v': [self.walls[4], self.walls[3], self.walls[1]]
+            }
+
+        # wall 4
+        self.adjacency_dictionary[self.walls[3]] = \
+            {
+                'h': [self.walls[5], self.walls[2], self.walls[0]],
+                'v': [self.walls[4], self.walls[2], self.walls[1]]
+            }
+
+        # wall 5
+        self.adjacency_dictionary[self.walls[4]] = \
+            {
+                'h': [self.walls[5], self.walls[1], self.walls[0]],
+                'v': [self.walls[2], self.walls[1], self.walls[3]]
+            }
+
+        # wall 6
+        self.adjacency_dictionary[self.walls[5]] = \
+            {
+                'h': [self.walls[1], self.walls[0], self.walls[4]],
+                'v': [self.walls[2], self.walls[0], self.walls[3]]
+            }
+
+    def move_upper_right(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['h'][::-1]
+        row_to_move = origin.get_upper_row()
+
+        for neighbor in neighbors:
+            row_to_move = neighbor.swap_upper_row(row_to_move)
+
+        origin.swap_upper_row(row_to_move)
