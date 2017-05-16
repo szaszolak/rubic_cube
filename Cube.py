@@ -18,7 +18,6 @@ class Cube:
         self.generate()
         self.build_adjacency_dictionary()
 
-
     def generate(self):
         self.walls = []
         for wall in range(6):
@@ -92,5 +91,32 @@ class Cube:
 
         for neighbor in neighbors:
             row_to_move = neighbor.swap_upper_row(row_to_move)
+
+        origin.swap_upper_row(row_to_move)
+
+    def move_upper_rows_left(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['h']
+        row_to_move = origin.get_upper_row()
+
+        for neighbor in neighbors:
+            row_to_move = neighbor.swap_upper_row(row_to_move)
+
+        origin.swap_upper_row(row_to_move)
+
+    def move_lower_rows_right(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['h'][::-1]
+        row_to_move = origin.get_lower_row()
+
+        for neighbor in neighbors:
+            row_to_move = neighbor.swap_lower_row(row_to_move)
+
+        origin.swap_upper_row(row_to_move)
+
+    def move_lower_rows_left(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['h']
+        row_to_move = origin.get_lower_row()
+
+        for neighbor in neighbors:
+            row_to_move = neighbor.swap_lower_row(row_to_move)
 
         origin.swap_upper_row(row_to_move)
