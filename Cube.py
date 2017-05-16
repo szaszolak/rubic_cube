@@ -86,7 +86,7 @@ class Cube:
                 'v': [self.walls[2], self.walls[0], self.walls[3]]
             }
 
-    def move_upper_right(self, origin):
+    def move_upper_rows_right(self, origin):
         neighbors = self.adjacency_dictionary[origin]['h'][::-1]
         row_to_move = origin.get_upper_row()
 
