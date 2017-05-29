@@ -86,7 +86,7 @@ class Cube:
             }
 
     def move_upper_rows_right(self, origin):
-        neighbors = self.adjacency_dictionary[origin]['h'][::-1]
+        neighbors = self.adjacency_dictionary[origin]['h']
         row_to_move = origin.get_upper_row()
 
         for neighbor in neighbors:
@@ -95,7 +95,7 @@ class Cube:
         origin.swap_upper_row(row_to_move)
 
     def move_upper_rows_left(self, origin):
-        neighbors = self.adjacency_dictionary[origin]['h']
+        neighbors = self.adjacency_dictionary[origin]['h'][::-1]
         row_to_move = origin.get_upper_row()
 
         for neighbor in neighbors:
