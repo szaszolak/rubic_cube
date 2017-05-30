@@ -3,8 +3,6 @@ import numpy as np
 from Wall import Wall
 
 
-# horizontal neighbors are ordered from left to right
-# vertical neighbors are ordered from left to right
 class Cube:
     def __init__(self):
         self.colors = []
@@ -120,3 +118,39 @@ class Cube:
             row_to_move = neighbor.swap_lower_row(row_to_move)
 
         origin.swap_lower_row(row_to_move)
+
+    def move_left_column_down(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['v']
+        column_to_move = origin.get_left_column()
+
+        for neighbor in neighbors:
+            column_to_move = neighbor.swap_left_column(column_to_move)
+
+        origin.swap_left_column(column_to_move)
+
+    def move_left_column_up(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['v'][::-1]
+        column_to_move = origin.get_left_column()
+
+        for neighbor in neighbors:
+            column_to_move = neighbor.swap_left_column(column_to_move)
+
+        origin.swap_left_column(column_to_move)
+
+    def move_right_column_down(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['v']
+        column_to_move = origin.get_right_column()
+
+        for neighbor in neighbors:
+            column_to_move = neighbor.swap_right_column(column_to_move)
+
+        origin.swap_right_column(column_to_move)
+
+    def move_right_column_up(self, origin):
+        neighbors = self.adjacency_dictionary[origin]['v'][::-1]
+        column_to_move = origin.get_right_column()
+
+        for neighbor in neighbors:
+            column_to_move = neighbor.swap_right_column(column_to_move)
+
+        origin.swap_right_column(column_to_move)

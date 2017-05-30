@@ -16,6 +16,66 @@ class CubeTest(unittest.TestCase):
         self.cube.walls[5] = Wall(np.ones([3, 3], int) * 6)
         self.cube.build_adjacency_dictionary()
 
+    def test_move_right_column_up(self):
+        expected_wall1 = np.matrix('1,1,3;1,1,3;1,1,3')
+        expected_wall3 = np.matrix('3,3,6;3,3,6;3,3,6')
+        expected_wall4 = np.matrix('4,4,1;4,4,1;4,4,1')
+        expected_wall6 = np.matrix('6,6,4;6,6,4;6,6,4')
+        self.cube.move_right_column_up(self.cube.walls[0])
+        wall1 = self.cube.walls[0].state
+        wall3 = self.cube.walls[2].state
+        wall4 = self.cube.walls[3].state
+        wall6 = self.cube.walls[5].state
+        self.assertTrue(np.array_equal(expected_wall1, wall1))
+        self.assertTrue(np.array_equal(expected_wall3, wall3))
+        self.assertTrue(np.array_equal(expected_wall4, wall4))
+        self.assertTrue(np.array_equal(expected_wall6, wall6))
+
+    def test_move_right_column_down(self):
+        expected_wall1 = np.matrix('1,1,4;1,1,4;1,1,4')
+        expected_wall3 = np.matrix('3,3,1;3,3,1;3,3,1')
+        expected_wall4 = np.matrix('4,4,6;4,4,6;4,4,6')
+        expected_wall6 = np.matrix('6,6,3;6,6,3;6,6,3')
+        self.cube.move_right_column_down(self.cube.walls[0])
+        wall1 = self.cube.walls[0].state
+        wall3 = self.cube.walls[2].state
+        wall4 = self.cube.walls[3].state
+        wall6 = self.cube.walls[5].state
+        self.assertTrue(np.array_equal(expected_wall1, wall1))
+        self.assertTrue(np.array_equal(expected_wall3, wall3))
+        self.assertTrue(np.array_equal(expected_wall4, wall4))
+        self.assertTrue(np.array_equal(expected_wall6, wall6))
+
+    def test_move_left_column_up(self):
+        expected_wall1 = np.matrix('3,1,1;3,1,1;3,1,1')
+        expected_wall3 = np.matrix('6,3,3;6,3,3;6,3,3')
+        expected_wall4 = np.matrix('1,4,4;1,4,4;1,4,4')
+        expected_wall6 = np.matrix('4,6,6;4,6,6;4,6,6')
+        self.cube.move_left_column_up(self.cube.walls[0])
+        wall1 = self.cube.walls[0].state
+        wall3 = self.cube.walls[2].state
+        wall4 = self.cube.walls[3].state
+        wall6 = self.cube.walls[5].state
+        self.assertTrue(np.array_equal(expected_wall1, wall1))
+        self.assertTrue(np.array_equal(expected_wall3, wall3))
+        self.assertTrue(np.array_equal(expected_wall4, wall4))
+        self.assertTrue(np.array_equal(expected_wall6, wall6))
+
+    def test_move_left_column_down(self):
+        expected_wall1 = np.matrix('4,1,1;4,1,1;4,1,1')
+        expected_wall3 = np.matrix('1,3,3;1,3,3;1,3,3')
+        expected_wall4 = np.matrix('6,4,4;6,4,4;6,4,4')
+        expected_wall6 = np.matrix('3,6,6;3,6,6;3,6,6')
+        self.cube.move_left_column_down(self.cube.walls[0])
+        wall1 = self.cube.walls[0].state
+        wall3 = self.cube.walls[2].state
+        wall4 = self.cube.walls[3].state
+        wall6 = self.cube.walls[5].state
+        self.assertTrue(np.array_equal(expected_wall1, wall1))
+        self.assertTrue(np.array_equal(expected_wall3, wall3))
+        self.assertTrue(np.array_equal(expected_wall4, wall4))
+        self.assertTrue(np.array_equal(expected_wall6, wall6))
+
     def test_move_upper_rows_right(self):
         expected_wall1 = np.matrix('2,2,2;1,1,1;1,1,1')
         expected_wall2 = np.matrix('6,6,6;2,2,2;2,2,2')
