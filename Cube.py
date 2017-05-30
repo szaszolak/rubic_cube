@@ -154,3 +154,18 @@ class Cube:
             column_to_move = neighbor.swap_right_column(column_to_move)
 
         origin.swap_right_column(column_to_move)
+
+    def get_missing_walls(self):
+        missing = 0
+        for wall in self.walls:
+            if wall.missing_blocks() != 0:
+                missing += 1
+
+        return missing
+
+    def get_missing_blocks(self):
+        missing = 0
+        for wall in self.walls:
+            missing += wall.missing_blocks()
+
+        return missing
