@@ -2,7 +2,7 @@ from Cube import Cube
 from Wall import Wall
 import numpy as np
 import unittest
-
+import copy
 
 class TestCube(unittest.TestCase):
 
@@ -136,6 +136,11 @@ class TestCube(unittest.TestCase):
         self.assertTrue(np.array_equal(expected_wall5, wall5))
         self.assertTrue(np.array_equal(expected_wall6, wall6))
 
+    def test_match(self):
+        other = copy.deepcopy(self.cube)
+        self.assertTrue(self.cube.match(other))
+        self.cube.move_lower_rows_left(self.cube.walls[0])
+        self.assertFalse(self.cube.match(other))
 
 if __name__ == '__main__':
     unittest.main()
