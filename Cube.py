@@ -169,3 +169,9 @@ class Cube:
             missing += wall.missing_blocks()
 
         return missing
+
+    def match(self, other_cube):
+        for i in range(6):
+            if not np.array_equal(self.walls[i].state, other_cube.walls[i].state):
+                return False
+        return True
