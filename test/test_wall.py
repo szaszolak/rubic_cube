@@ -3,7 +3,7 @@ import numpy as np
 import unittest
 
 
-class WallTest(unittest.TestCase):
+class TestWall(unittest.TestCase):
 
     def setUp(self):
         self.initial_state = np.matrix('1, 1, 1; 2, 2, 2; 3, 3, 3')

@@ -4,7 +4,7 @@ import numpy as np
 import unittest
 
 
-class CubeTest(unittest.TestCase):
+class TestCube(unittest.TestCase):
 
     def setUp(self):
         self.cube = Cube()
