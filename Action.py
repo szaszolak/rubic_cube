@@ -1,5 +1,3 @@
-
-
 class Action:
     def __init__(self, cube, wall, move_method):
         self.cube = cube
