@@ -8,7 +8,7 @@ class Path(object):
     self.frontier = []
     self.explored = []
     self.discover_new_actions()
-    self.exploration_candidate = self.find_exploration_candidate()
+    self.exploration_candidate = None
 
   def discover_new_actions(self):
     for wall_index in range(6):
@@ -38,12 +38,15 @@ class Path(object):
 
   # potential endless loop add escape condition
   def find_exploration_candidate(self):
-    if not self.frontier
+    if not self.frontier:
       return None
-    candidate = self.frontier.pop(find_cheapest_action())
-    if not self.cube.match(candidate.cube)
+
+    cheapest_action = self.find_cheapest_action()
+    print cheapest_action.get_description()
+    candidate = self.frontier.pop(cheapest_action)
+    if not self.cube.match(candidate.cube):
       return candidate
-    else
+    else:
       return explore()
 
   def should_be_dropped(self):
@@ -51,7 +54,7 @@ class Path(object):
 
   def total_cost(self):
     cost = 0
-    for action in self.explored
+    for action in self.explored:
       cost += action.total_cost()
     return cost
 

@@ -25,6 +25,6 @@ class TestPath(unittest.TestCase):
   def test_find_cheapest_action(self):
     self.cube.move_upper_rows_right(self.cube.walls[0])
     self.path.discover_new_actions()
-    action = self.agent.find_cheapest_action()
+    action = self.path.find_cheapest_action()
     self.assertEqual(action.get_description(), 'on 0 wall, perform move_upper_rows_left')
 
