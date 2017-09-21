@@ -1,13 +1,14 @@
 from Action import Action
 from Cube   import Cube
 import copy
-# this class responsibility was sucked up by Path, it should chage to work over Path instances, to be done some day
-class SearchAgent(object):
+
+class Path(object):
   def __init__(self, cube):
     self.cube = cube
     self.frontier = []
     self.explored = []
     self.discover_new_actions()
+    self.exploration_candidate = self.find_exploration_candidate()
 
   def discover_new_actions(self):
     for wall_index in range(6):
@@ -34,3 +35,25 @@ class SearchAgent(object):
       if cheapest.total_cost() > action.total_cost():
         cheapest = action
     return cheapest
+
+  # potential endless loop add escape condition
+  def find_exploration_candidate(self):
+    if not self.frontier
+      return None
+    candidate = self.frontier.pop(find_cheapest_action())
+    if not self.cube.match(candidate.cube)
+      return candidate
+    else
+      return explore()
+
+  def should_be_dropped(self):
+    return not self.frontier
+
+  def total_cost(self):
+    cost = 0
+    for action in self.explored
+      cost += action.total_cost()
+    return cost
+
+  def exploration_cost(self):
+    return total_cost() + self.exploration_candidate.total_cost()
