@@ -41,9 +41,7 @@ class Path(object):
     if not self.frontier:
       return None
 
-    cheapest_action = self.find_cheapest_action()
-    print cheapest_action.get_description()
-    candidate = self.frontier.pop(cheapest_action)
+    candidate = self.frontier.pop(self.find_cheapest_action())
     if not self.cube.match(candidate.cube):
       return candidate
     else:
