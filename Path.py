@@ -1,14 +1,13 @@
 from Action import Action
-from Cube   import Cube
 import copy
 
 class Path(object):
-  def __init__(self, cube):
+  def __init__(self, cube, explored = []):
     self.cube = cube
     self.frontier = []
-    self.explored = []
+    self.explored = explored
     self.discover_new_actions()
-    self.exploration_candidate = None
+    self.exploration_candidate = self.find_exploration_candidate()
 
   def discover_new_actions(self):
     for wall_index in range(6):
@@ -36,16 +35,14 @@ class Path(object):
         cheapest = action
     return cheapest
 
-  # potential endless loop add escape condition
   def find_exploration_candidate(self):
-    if not self.frontier:
-      return None
-
-    candidate = self.frontier.pop(self.find_cheapest_action())
-    if not self.cube.match(candidate.cube):
-      return candidate
-    else:
-      return explore()
+    while self.frontier:
+      candidate = self.find_cheapest_action()
+      # we remove candidate from frontie bceause it either will be explored or dropped as leading to already explored state
+      self.frontier.remove(candidate)
+      if not self.cube.match(candidate.cube):
+        return candidate
+    return None
 
   def should_be_dropped(self):
     return not self.frontier
@@ -58,3 +55,11 @@ class Path(object):
 
   def exploration_cost(self):
     return total_cost() + self.exploration_candidate.total_cost()
+
+  def explore(self):
+    copied_explored = copy.deepcopy(self.explored)
+    copied_explored.append(self.exploration_candidate)
+    new_path = Path(self.exploration_candidate.cube, copied_explored)
+    self.exploration_candidate = self.find_exploration_candidate()
+    return new_path
+

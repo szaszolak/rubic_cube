@@ -175,3 +175,7 @@ class Cube:
             if not np.array_equal(self.walls[i].state, other_cube.walls[i].state):
                 return False
         return True
+
+    def print_out(self):
+        for wall in self.walls:
+            print wall.state

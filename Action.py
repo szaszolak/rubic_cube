@@ -10,3 +10,6 @@ class Action:
 
     def total_cost(self):
         return self.cube.get_missing_walls() + self.cube.get_missing_blocks()
+
+    def match(self, other_action):
+      self.cube.match(other_action.cube)
