@@ -36,6 +36,9 @@ class TestPath(unittest.TestCase):
     explored_path = self.path.explore()
     self.assertEqual(explored_path.explored, explored_list)
 
+  def test_exploration_cost(self):
+    self.assertEqual(0, self.path.exploration_cost())
+
   # those test has to be tweaked due to exploration candidate change
   # def test_find_cheapest_action(self):
   #   action = self.path.find_cheapest_action()
