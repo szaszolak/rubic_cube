@@ -1,33 +1,51 @@
 # from Action import Action
-from Cube import Cube
-from Path import Path
+from Cube     import Cube
+from Path     import Path
+from Frontier import Frontier
 import pdb
 # import copy
 
 # TODO: created method search method with usage of _explore.
 class SearchAgent(object):
-  def __init__(self):
-    self.initial_cube = Cube()
-    # this probably should be a tree structure but lest start simple for now.
-    self.frontier = [Path(self.initial_cube)]
-    self.explored = {}
+    def __init__(self):
+        self.initial_cube = Cube()
+        self.frontier = Frontier()
+        self.frontier.append(Path(self.initial_cube))  
+        self.explored = {}
 
-  # def start_searching(self):
-  #   print 'starting search'
-  def _explore(self):
-    path = self._path_to_explore()
-    if self.explored[path.explodation_candidate.cube]:
-      path.explore()
-    else:
-      self.frontier.append(path.explore())
-      self.explored[path.explodation_candidate.cube] = True
-    if path.should_be_dropped():
-      self.frontier.remove(path)
+    def explore(self):
+        added = 0
+        iteration = 0
+        ignored = 0
+        while True:
+            path = self._path_to_explore()
+            stringified_path_cube = self._squash_cube_to_string_sequence(path.exploration_candidate.cube)
+                #if path leads to already explored space do not add it to frontier
+            if stringified_path_cube in self.explored:
+                ignored += 1
+                path.explore() 
+            else:
+                new_path = path.explore()
+                if new_path.cube.get_missing_blocks() == 0:
+                    return new_path
+                else:
+                    added += 1
+                    self.frontier.append(new_path)
+                    self.explored[stringified_path_cube] = True # in fact we are only interested in existance of give key
+            
+            if not path.should_be_dropped():
+                self.frontier.append(path)
+            
+            if iteration % 1000 == 0:
+                print 'Iteration no: {0} frontier size: {1} explored states: {2}'.format(iteration, len(self.frontier.paths), len(self.explored))
+                print 'Already added: {0}, ignored {1}'.format(added, ignored)
+                self.frontier.print_out()
+                print '*******************************'
 
-  def _path_to_explore(self):
-    return sorted(self.frontier, cmp=self._compare_paths)[0]
+            iteration += 1
 
-  def _compare_paths(self, path1, path2):
-    if path1.exploration_cost() == path2.exploration_cost():
-      return 0
-    return (1 if path1.exploration_cost() > path2.exploration_cost() else -1)
+    def _path_to_explore(self):
+        return self.frontier.pop()
+
+    def _squash_cube_to_string_sequence(self, cube):
+        return'-'.join(str(wall.state) for wall in cube.walls)

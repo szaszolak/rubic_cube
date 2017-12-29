@@ -5,7 +5,7 @@ class Path(object):
   def __init__(self, cube, explored = []):
     self.cube = cube
     self.frontier = []
-    self.explored = explored
+    self.explored = explored # so we know how we achieve this finall cube
     self._discover_new_actions()
     self.exploration_candidate = self._find_exploration_candidate()
 
@@ -17,8 +17,9 @@ class Path(object):
 
   def explore(self):
     copied_explored = copy.deepcopy(self.explored)
-    copied_explored.append(self.exploration_candidate)
-    new_path = Path(self.exploration_candidate.cube, copied_explored)
+    copied_candidate = copy.deepcopy(self.exploration_candidate)
+    copied_explored.append(copied_candidate)
+    new_path = Path(copied_candidate.cube, copied_explored)
     self.exploration_candidate = self._find_exploration_candidate()
     return new_path
 
