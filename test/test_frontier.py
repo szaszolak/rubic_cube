@@ -30,3 +30,20 @@ class TestFrontier(unittest.TestCase):
     	self.frontier.append(mocked_path)
     	self.assertEqual(mocked_path, self.frontier.pop())
     	self.assertEqual([], self.frontier.paths)
+
+    def test_state_log(self):
+        mocked_path_1 = MagicMock()
+        mocked_path_1.exploration_cost = MagicMock(return_value=2)
+
+        cube = MagicMock()
+        cube_mock_config = { 'get_missing_blocks.return_value': 19, 'get_missing_walls.return_value': 3 }
+        cube.configure_mock(**cube_mock_config)
+        mocked_path_1.cube = cube
+
+        self.frontier.append(mocked_path_1)
+        state_log = {
+            'first_path': { 'exploration_cost': 2, 'missing_blocks': 19, 'missing_walls': 3 },
+            'last_path': { 'exploration_cost': 2, 'missing_blocks': 19, 'missing_walls': 3 }
+        }
+        print self.frontier.state_log()
+        self.assertEqual(state_log, self.frontier.state_log())
