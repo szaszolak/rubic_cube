@@ -3,6 +3,7 @@ from Cube     import Cube
 from Path     import Path
 from Frontier import Frontier
 import pdb
+from pymongo  import MongoClient
 # import copy
 
 # TODO: created method search method with usage of _explore.
@@ -12,6 +13,7 @@ class SearchAgent(object):
         self.frontier = Frontier()
         self.frontier.append(Path(self.initial_cube))  
         self.explored = {}
+        self.db = MongoClient()['rubic_cube']
 
     def explore(self):
         added = 0
@@ -37,10 +39,11 @@ class SearchAgent(object):
                 self.frontier.append(path)
             
             if iteration % 1000 == 0:
-                print 'Iteration no: {0} frontier size: {1} explored states: {2}'.format(iteration, len(self.frontier.paths), len(self.explored))
-                print 'Already added: {0}, ignored {1}'.format(added, ignored)
-                self.frontier.print_out()
-                print '*******************************'
+                self._log_state(iteration, added, ignored)
+                # print 'Iteration no: {0} frontier size: {1} explored states: {2}'.format(iteration, len(self.frontier.paths), len(self.explored))
+                # print 'Already added: {0}, ignored {1}'.format(added, ignored)
+                # self.frontier.print_out()
+                # print '*******************************'
 
             iteration += 1
 
@@ -49,3 +52,15 @@ class SearchAgent(object):
 
     def _squash_cube_to_string_sequence(self, cube):
         return'-'.join(str(wall.state) for wall in cube.walls)
+
+    def _log_state(self, iteration, added, ignored):
+        log = { 
+            'iteration': iteration, 
+            'frontier_size': len(self.frontier.paths), 
+            'explored_states': len(self.explored), 
+            'added': added, 
+            'ignored': ignored, 
+            'frontier': self.frontier.state_log() 
+        }
+        print 'inserting {0}'.format(log)
+        self.db.logs.insert_one(log)
