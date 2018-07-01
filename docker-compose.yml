@@ -1,0 +1,10 @@
+version: "2"
+services:
+  mongo:
+    image: 'mongo:latest'
+    ports:
+      - "27017:27017"
+  rubic_cube:
+    image: szaszolak/rubic_cube
+    command: python main.py
+    
