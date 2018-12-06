@@ -61,3 +61,6 @@ class Wall:
 
     def missing_blocks(self):
         return 9 - np.count_nonzero(self.state == self.goal)
+
+    def missing_block_in_row(self, row_index):
+        return  3 - np.count_nonzero(self.state[row_index, :] == self.goal)

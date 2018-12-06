@@ -23,4 +23,5 @@ class Frontier(object):
 		print "Path first: exploration cost: {0} missing blocks: {1} missing walls: {2}".format(path.exploration_cost(), path.cube.get_missing_blocks(), path.cube.get_missing_walls())
 		path = self.paths[len(self.paths) - 1]
 		print "Path last: exploration cost: {0} missing blocks: {1} missing walls: {2}".format(path.exploration_cost(), path.cube.get_missing_blocks(), path.cube.get_missing_walls())
-			# print path.cube.print_out()
+		print self.paths[0].cube.print_out()
+

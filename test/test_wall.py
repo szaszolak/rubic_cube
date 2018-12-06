@@ -13,6 +13,10 @@ class TestWall(unittest.TestCase):
     def test_missing_blocks(self):
         self.assertEqual(6, self.wall.missing_blocks())
 
+    def missing_block_in_row(self):
+        self.assertEqual(3, self.wall.missing_block_in_row(0))
+        self.assertEqual(0, self.wall.missing_block_in_row(1))
+
     def test_peek_upper_row(self):
         self.assertEqual(3, self.wall.peek_upper_row(np.matrix('2,2,2')))
 
